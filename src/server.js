@@ -35,9 +35,9 @@ const vehicleRoutes = require('./routes/vehicle')
 const healthRoutes = require('./routes/health');
 const { supabase } = require('./config/supabase');
 
-app.use(cors())
 
 const app = express();
+app.use(cors())
 const PORT = process.env.PORT || 3000;
 
 // Security middleware
