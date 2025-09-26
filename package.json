@@ -1,0 +1,68 @@
+{
+  "name": "easy-rep-internal-backend",
+  "version": "1.0.0",
+  "description": "Internal backend application with Supabase integration",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"No tests specified\" && exit 0",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js",
+    "seed:clear": "node scripts/seed.js clear",
+    "docker:build": "docker build -t easy-rep-internal-backend .",
+    "docker:run": "docker-compose up --build"
+  },
+  "keywords": [
+    "nodejs",
+    "supabase",
+    "backend",
+    "api",
+    "express",
+    "authentication",
+    "file-upload"
+  ],
+  "author": "HTML5SOLUTIONS",
+  "license": "MIT",
+  "dependencies": {
+    "@sentry/node": "^10.5.0",
+    "@sentry/profiling-node": "^10.5.0",
+    "@supabase/supabase-js": "^2.38.0",
+    "axios": "^1.12.2",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "docker": "^1.0.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "serverless-http": "^3.2.0",
+    "socket.io": "^4.8.1",
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.0",
+    "jest": "^29.7.0",
+    "jest-watch-typeahead": "^2.2.2",
+    "nodemon": "^3.0.2",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

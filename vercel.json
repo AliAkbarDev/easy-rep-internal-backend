@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "src/server.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "src/server.js" }
+  ],
+  "env": {
+    "VERCEL_MAX_REQUEST_SIZE": "10mb"
+  }
+}

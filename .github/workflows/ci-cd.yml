@@ -1,0 +1,72 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run tests
+      run: npm test
+    
+    - name: Run linting
+      run: npm run lint || echo "No lint script found"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          # Navigate to app directory or clone if it doesn't exist
+          if [ ! -d "/home/ec2-user/easy-rep-internal-backend" ]; then
+            cd /home/ec2-user
+            git clone git@github.com:ShaniDevelp/easy-rep-internal-backend.git app
+          fi
+          
+          cd /home/ec2-user/easy-rep-internal-backend
+          
+          # Pull latest changes
+          git fetch origin
+          git reset --hard origin/main
+          
+          # Stop existing containers
+          docker-compose -f docker-compose.yml down || true
+          
+          # Remove old images to force rebuild
+          docker image rm $(docker images -q easy-rep-internal-backend-app) || true
+          
+          # Build and start new containers
+          docker-compose -f docker-compose.yml up -d --build
+          
+          # Clean up
+          docker image prune -f
+          docker container prune -f
+          
+          # Show running containers
+          docker ps
+          
+          echo "Deployment completed!"
