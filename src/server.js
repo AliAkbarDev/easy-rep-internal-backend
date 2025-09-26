@@ -35,12 +35,13 @@ const vehicleRoutes = require('./routes/vehicle')
 const healthRoutes = require('./routes/health');
 const { supabase } = require('./config/supabase');
 
+app.use(cors())
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Security middleware
 app.use(helmet());
-app.use(cors())
 
 // Body parsing middleware
 app.use(express.json());
