@@ -36,8 +36,8 @@ router.post('/register', validateRequest(registerSchema), async (req, res) => {
     const { email, password, userName, firstName, familyName, role } = req.body;
 
     const supabaseAdmin = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      process.env.SUPABASE_URL || "https://ihmjwvwvixaxmfkgkejc.supabase.co",
+      process.env.SUPABASE_SERVICE_ROLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlobWp3dnd2aXhheG1ma2drZWpjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjU1NDgyNiwiZXhwIjoyMDYyMTMwODI2fQ.NMmETtsZU4N7aMAQa8bZU4ZeHzkUoPNTsMq0gddK2lg",
     );
 
     const { data: existingAuthUser, error: authUserError } = await supabaseAdmin.auth.admin.listUsers();
@@ -315,11 +315,11 @@ router.post('/logout', async (req, res) => {
       return unauthorizedResponse(res, 'Access token is required');
     }
 
-    const response = await fetch(`${process.env.SUPABASE_URL}/auth/v1/logout`, {
+    const response = await fetch(`${process.env.SUPABASE_URL || "https://ihmjwvwvixaxmfkgkejc.supabase.co"}/auth/v1/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'apikey': process.env.SUPABASE_ANON_KEY,
+        'apikey': process.env.SUPABASE_ANON_KEY  || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlobWp3dnd2aXhheG1ma2drZWpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY1NTQ4MjYsImV4cCI6MjA2MjEzMDgyNn0.74kp5jSGn8-3Gg1nV6ZtyZuGz-nyChPgo6FfruocTsg",
         'Authorization': `Bearer ${access_token}`,
       },
     });
@@ -348,8 +348,8 @@ router.post('/change-password', authenticateToken, async (req, res) => {
     const userId = req.userId;
 
     const supabaseAdmin = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      process.env.SUPABASE_URL || "https://ihmjwvwvixaxmfkgkejc.supabase.co",
+      process.env.SUPABASE_SERVICE_ROLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlobWp3dnd2aXhheG1ma2drZWpjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjU1NDgyNiwiZXhwIjoyMDYyMTMwODI2fQ.NMmETtsZU4N7aMAQa8bZU4ZeHzkUoPNTsMq0gddK2lg",
       {
         auth: {
           autoRefreshToken: false,
@@ -424,8 +424,8 @@ router.post('/forgot-password', validateRequest(passwordResetRequestSchema), asy
     const { email } = req.body;
 
     const supabaseAdmin = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
+ process.env.SUPABASE_URL || "https://ihmjwvwvixaxmfkgkejc.supabase.co",
+      process.env.SUPABASE_SERVICE_ROLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlobWp3dnd2aXhheG1ma2drZWpjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjU1NDgyNiwiZXhwIjoyMDYyMTMwODI2fQ.NMmETtsZU4N7aMAQa8bZU4ZeHzkUoPNTsMq0gddK2lg",
     );
 
     const { data: existingAuthUser, error: authUserError } = await supabaseAdmin.auth.admin.listUsers();
@@ -557,8 +557,8 @@ router.post('/reset-password', async (req, res) => {
     }
 
     const supabaseAdmin = createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
+      process.env.SUPABASE_URL || "https://ihmjwvwvixaxmfkgkejc.supabase.co",
+      process.env.SUPABASE_SERVICE_ROLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlobWp3dnd2aXhheG1ma2drZWpjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NjU1NDgyNiwiZXhwIjoyMDYyMTMwODI2fQ.NMmETtsZU4N7aMAQa8bZU4ZeHzkUoPNTsMq0gddK2lg",
       {
         auth: {
           autoRefreshToken: false,
